@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  # 1. RabbitMQ Service (Jantung komunikasi)
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: uas-rabbitmq
+    ports:
+      - "5672:5672"   # Port komunikasi aplikasi
+      - "15672:15672" # Port dashboard admin
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # 2. User Service
+  user-service:
+    build: ./user-service
+    container_name: uas-user-service
+    ports:
+      - "3001:3001"
+    environment:
+      # Koneksi ke RabbitMQ menggunakan nama service "rabbitmq"
+      - RABBITMQ_URL=amqp://rabbitmq:5672
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+  # 3. Order Service
+  order-service:
+    build: ./order-service
+    container_name: uas-order-service
+    ports:
+      - "3002:3002"
+    environment:
+      - RABBITMQ_URL=amqp://rabbitmq:5672
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+  # 4. Frontend (Laravel)
+  frontend:
+    build: ./frontend
+    container_name: uas-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - user-service
+      - order-service

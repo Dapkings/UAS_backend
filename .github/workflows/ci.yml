@@ -1,0 +1,26 @@
+name: UAS Backend CI/CD
+
+# Jalan setiap kali ada push ke branch main
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Build Docker Images
+      run: docker-compose build
+      
+    - name: Test Containers Up
+      run: |
+        docker-compose up -d
+        sleep 30
+        docker-compose ps
+        docker-compose down

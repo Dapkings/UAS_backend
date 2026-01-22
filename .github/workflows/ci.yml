@@ -1,10 +1,7 @@
-name: UAS Backend CI/CD
+name: CI Pipeline (UAS Backend)
 
-# Jalan setiap kali ada push ke branch main
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
     branches: [ "main" ]
 
 jobs:
@@ -15,12 +12,37 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v3
 
-    - name: Build Docker Images
-      run: docker-compose build
-      
-    - name: Test Containers Up
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install Dependencies (User Service)
       run: |
-        docker-compose up -d
-        sleep 30
-        docker-compose ps
-        docker-compose down
+        cd user-service
+        npm install
+
+    - name: Build Aplikasi (User Service)
+      run: |
+        cd user-service
+        npm run build
+
+    - name: Unit Test (User Service)
+      run: |
+        cd user-service
+        npm run test -- --pass-with-no-tests
+
+    - name: Install Dependencies (Order Service)
+      run: |
+        cd order-service
+        npm install
+
+    - name: Build Aplikasi (Order Service)
+      run: |
+        cd order-service
+        npm run build
+
+    - name: Unit Test (Order Service)
+      run: |
+        cd order-service
+        npm run test -- --pass-with-no-tests

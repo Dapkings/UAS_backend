@@ -10,7 +10,7 @@ import { AppService } from './app.service';
         name: 'USER_SERVICE_HUB',
         transport: Transport.RMQ,
         options: {
-          urls: ['amqp://localhost:5672'], 
+          urls: ['amqp://rabbitmq:5672'],
           queue: 'main_queue',
           queueOptions: {
             durable: false,

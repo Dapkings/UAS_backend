@@ -1,11 +1,9 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { EventPattern, Payload } from '@nestjs/microservices';
 
-// 1. UBAH INI: Tambahkan 'orders' agar URL menjadi http://localhost:3002/orders
 @Controller('orders') 
 export class AppController {
 
-  // 2. TAMBAHKAN INI: Endpoint untuk tombol "Pesan" dari Frontend
   @Post('create')
   createOrder(@Body() data: any) {
     console.log(' Order masuk dari Frontend:', data);
@@ -18,7 +16,6 @@ export class AppController {
     };
   }
 
-  // --- Kode lama kamu (tetap disimpan) ---
   @Get()
   getHello(): string {
     return 'Order Service is Ready!';

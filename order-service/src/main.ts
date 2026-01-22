@@ -6,7 +6,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.enableCors({
-    origin: true, // Izinkan semua sumber (Frontend)
+    origin: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });
@@ -14,8 +14,8 @@ async function bootstrap() {
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.RMQ,
     options: {
-      urls: ['amqp://localhost:5672'], 
-      queue: 'main_queue',             
+      urls: ['amqp://rabbitmq:5672'],
+      queue: 'main_queue',
       queueOptions: {
         durable: false,
       },

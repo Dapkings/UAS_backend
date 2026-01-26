@@ -13,7 +13,7 @@
 <div id="app" class="max-w-4xl mx-auto space-y-8 font-sans">
     
     <div class="text-center border-b pb-6 border-gray-300">
-        <h1 class="text-3xl font-extrabold text-blue-700 tracking-tight">Sistem Order Mikroservis</h1>
+        <h1 class="text-3xl font-extrabold text-blue-700 tracking-tight">Sistem Order Tiket</h1>
     </div>
 
     <div v-if="!isLoggedIn" class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 max-w-md mx-auto">
@@ -57,7 +57,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
                 <h2 class="text-xl font-bold mb-4 text-gray-800 flex items-center gap-2">
-                    <span></span> Daftar Produk
+                    <span></span> Daftar Tiket
                 </h2>
                 <div class="space-y-3">
                     <div v-for="product in products" :key="product.id" 
@@ -114,10 +114,12 @@
 
             // Data Dummy Produk
             const products = ref([
-                { id: 101, name: 'Laptop Gaming ASUS' },
-                { id: 102, name: 'Mouse Logitech Silent' },
-                { id: 103, name: 'Mechanical Keyboard Rexus' },
-                { id: 104, name: 'Monitor LG 24 Inch' }
+                { id: 101, name: 'Tiket King Emyu' },
+                { id: 102, name: 'Tiket nonton PSS' },
+                { id: 103, name: 'Tiket Madrid vs Barca' },
+                { id: 104, name: 'Tiket Konser Coldplay' },
+                { id: 105, name: 'Tiket Konser Ed Sheeran' },
+                { id: 106, name: 'Tiket Konser Bernadya' },
             ]);
 
             // --- FUNGSI LOGIN ---
